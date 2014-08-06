@@ -1,0 +1,90 @@
+In order to reproduce the results from the original publication you need the 5 files in
+this folder:
+
+- e-Driver.pl
+- binomial_e-Driver.r
+- ensembl_sequences_72_37.txt
+- mut_data_and_tissue_info.txt
+- features_human_genome.txt
+
+Simply put, you need to run the following command in a terminal from the directory where
+these files are located:
+
+perl e-Driver.pl mut_data_and_tissue_info.txt features_human_genome.txt ensembl_sequences_72_37.txt OUTPUT_FILE_ROOT
+
+Where OUTPUT_FILE_ROOT is the name that you want to give to your analysis. For example, 
+if you ran the previous command with "analysis_samples_1" instead of OUTPUT_FILE_ROOT
+you should find new files in the directory:
+
+- One file called: "analysis_samples_1_perl_output.txt"
+- N files following the format: "analysis_samples_1_(tissue)_with_corrected_pvalues.txt"
+
+The first file (*_perl_output.txt) is a tab-separated file that contains the raw numbers
+used for the analysis of each protein region. The file has 7 columns:
+
+1 - Tissue: the tissue of origin of the mutations (Pancan refers to the aggregate of all tissues)
+2 - Protein: The protein ID that contains the region
+3 - The region being studied
+4 - The number of mutations in the region
+5 - The total number of mutations in the protein
+6 - The length (aa) of the region
+7 - The length of the whole protein
+
+The other files contain the actual analysis (the output of the Rscript) and are formated
+just as the *_perl_output.txt file but with two additional columns. The second to last
+column contains the raw p value of the binomial test, while the last column contains the
+FDR-adjusted q values.
+
+#######################
+ANALYZING YOUR OWN DATA
+#######################
+
+In order to analyze your own data you will need 3 files:
+
+- A file with the protein sequences (the equivalent to "ensembl_sequences_72_37.txt")
+- A file with the protein region annotations (equivalent to "features_human_genome.txt")
+- A file with the missense mutations in your samples (equivalent to "mut_data_and_tissue_info.txt")
+
+If you map your mutations/regions to ENSEMBL proteins (v72) you can reuse the files provided
+here, otherwise it's better to generate all 3 files for your project
+
+-PROTEIN SEQUENCE FILE-
+
+This file needs to have two columns separated by a tab space. The first column should be
+the name of the protein (mind the isoforms) and the second one the actual protein
+sequence. There should be only one protein per line
+
+Example:
+
+PROTEIN_NAME_1	AMHSTLREFGHIKLVVVVALKM
+
+-REGION ANNOTATIONS FILE-
+
+This file is, again, tab separated. Each line contains the region annotations for a single
+protein. The first column needs to be the protein name (it should be the same as for the
+protein sequence file). The rest of the line can contain as many regions as you want
+(separated by tab spaces), but they all should be in the format REGION_NAME-START-END
+where REGION_NAME is the name of the region (e.g. PF00069, but it can actually be whatever
+want), START is the position where the region starts and END is the position where the
+region ends. e-Driver counts the first aminoacid of a protein as position "1", not "0".
+Note that there is no problem with overlaping regions.
+
+Example:
+
+PROTEIN_NAME_1	REG1-2-43	REG2-50-65	REG3-15-53
+
+-MUTATIONS FILE-
+
+This file is also tab-separated. Each line contains the information of a missense mutation
+found in one patient. Lines have 4 different columns. 
+
+1 - The protein name: It should respect the protein names used in the other files
+2 - The position of the mutation within the protein: Note that e-Driver uses only point 
+missense mutations. Note also, again, that the first aminoacid of a protein should be "1",
+not "0".
+3 - The ID of the patient where the mutation was found
+4 - The tissue of origin of the sample
+
+Example:
+
+PROTEIN_NAME_1	35	PATIENT1	Pancreas
