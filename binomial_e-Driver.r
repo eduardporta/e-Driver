@@ -1,7 +1,7 @@
 args <- commandArgs(trailingOnly = TRUE)
 
 e.Driver <- function (MR, TM, LR, LP) {
-	result <- binom.test (MR, TM, LR/LP)
+	result <- binom.test (MR, TM, LR/LP, alternative = "greater")
 	return (result$p.value)
 }
 

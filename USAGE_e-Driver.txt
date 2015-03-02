@@ -5,12 +5,12 @@ this folder:
 - binomial_e-Driver.r
 - ensembl_sequences_72_37.txt
 - mut_data_and_tissue_info.txt
-- features_human_genome.txt
+- interfaces_human_genome.txt
 
 Simply put, you need to run the following command in a terminal from the directory where
 these files are located:
 
-perl e-Driver.pl mut_data_and_tissue_info.txt features_human_genome.txt ensembl_sequences_72_37.txt OUTPUT_FILE_ROOT
+perl e-Driver.pl 2 mut_data_and_tissue_info.txt interfaces_human_genome.txt ensembl_sequences_72_37.txt OUTPUT_FILE_ROOT
 
 Where OUTPUT_FILE_ROOT is the name that you want to give to your analysis. For example, 
 if you ran the previous command with "analysis_samples_1" instead of OUTPUT_FILE_ROOT
@@ -24,11 +24,11 @@ used for the analysis of each protein region. The file has 7 columns:
 
 1 - Tissue: the tissue of origin of the mutations (Pancan refers to the aggregate of all tissues)
 2 - Protein: The protein ID that contains the region
-3 - The region being studied
-4 - The number of mutations in the region
-5 - The total number of mutations in the protein
-6 - The length (aa) of the region
-7 - The length of the whole protein
+3 - The interface being studied
+4 - The number of mutations in the interface
+5 - The total number of mutations in the structure
+6 - The length (aa) of the interface
+7 - The length of the whole structure
 
 The other files contain the actual analysis (the output of the Rscript) and are formated
 just as the *_perl_output.txt file but with two additional columns. The second to last
@@ -42,7 +42,7 @@ ANALYZING YOUR OWN DATA
 In order to analyze your own data you will need 3 files:
 
 - A file with the protein sequences (the equivalent to "ensembl_sequences_72_37.txt")
-- A file with the protein region annotations (equivalent to "features_human_genome.txt")
+- A file with the protein interfaces annotations (equivalent to "features_human_genome.txt")
 - A file with the missense mutations in your samples (equivalent to "mut_data_and_tissue_info.txt")
 
 If you map your mutations/regions to ENSEMBL proteins (v72) you can reuse the files provided
