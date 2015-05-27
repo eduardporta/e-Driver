@@ -13,10 +13,6 @@ if ($ARGV[0] == 2) {
 
 	while (<IN>) {
 
-		if ($_ =~ /^PDB/) {
-			next;
-		}
-	
 		chomp;
 		my @array = split ("\t", $_);
 	
@@ -111,7 +107,7 @@ unless (scalar (keys %muts) > 0) {
 	die "COULDN'T GET THE MUTATIONS!\n";
 }
 
-my $name_perl_out = $ARGV[3]."_perl_output.txt";
+my $name_perl_out = $ARGV[4]."_perl_output.txt";
 open OUT, ">$name_perl_out" or die "CAN'T OPEN OUTPUT FILE \"$name_perl_out\"\n";
 print OUT "Tissue\tProtein\tPFR\tMutationsRegion\tTotalMutations\tLengthRegion\tLengthProtein\n";
 
