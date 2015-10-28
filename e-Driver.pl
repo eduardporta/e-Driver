@@ -31,7 +31,7 @@ if ($ARGV[0] == 2) {
 	close IN or die "CAN'T CLOSE FILEHANDLER TO \"$ARGV[2]\"\n";
 }
 
-elsif ($ARGV[1] == 1) {
+elsif ($ARGV[0] == 1) {
 	
 	open IN, $ARGV[2] or die "CAN'T OPEN INPUT FILE WITH FEATURE \"$ARGV[2]\"\n";
 
